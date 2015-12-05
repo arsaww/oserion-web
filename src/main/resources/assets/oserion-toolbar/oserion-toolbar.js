@@ -212,7 +212,13 @@
     toolBarManager.addButton(Button(editButton));
 
 }( jQuery ));
+var osrGetCookie = function(name) {
+    var match = document.cookie.match(new RegExp(name + '=([^;]+)'));
+    if (match) return match[1];
+};
 
 $(document).ready(function(){
-  $( "body" ).oserion();
+    var access = osrGetCookie("osr-access");
+    if(access == "ADMIN" || access == "SUPERADMIN" )
+    $( "body" ).oserion();
 });
