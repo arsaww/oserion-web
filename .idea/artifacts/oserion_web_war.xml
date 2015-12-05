@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="oserion-web:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="oserion-web.war">
+      <element id="artifact" artifact-name="oserion-web:war exploded" />
+    </root>
+  </artifact>
+</component>
