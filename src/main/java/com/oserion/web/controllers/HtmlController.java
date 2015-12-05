@@ -21,10 +21,12 @@ public class HtmlController {
 
     private static final Logger LOG = Logger.getLogger(HtmlController.class.getName());
 
-    @ResponseBody
+    //TODO: direct mapping to temp.html for the moment
+    //@ResponseBody
     @RequestMapping(method = RequestMethod.GET)
     public String getHTMLPage(HttpServletRequest req) {
         LOG.log(Level.INFO, "getHTMLPage");
-        return "HTML PAGE";
+        //return "HTML PAGE";
+        return "temp";
     }
 }
