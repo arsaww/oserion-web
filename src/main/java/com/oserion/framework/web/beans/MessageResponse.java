@@ -1,21 +1,21 @@
-package com.oserion.web.bean;
+package com.oserion.framework.web.beans;
 
-import com.oserion.web.util.ResponseUtil;
+import com.oserion.framework.web.util.ResponseUtil;
 
 /**
  * Created by Arsaww on 12/6/2015.
  */
-public class JsonMessageResponse {
+public class MessageResponse {
 
-    public JsonMessageResponse() {
+    public MessageResponse() {
     }
 
-    public JsonMessageResponse(String status, String message) {
+    public MessageResponse(String status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    public JsonMessageResponse(ResponseUtil r) {
+    public MessageResponse(ResponseUtil r) {
         this.status = r.getCode();
         this.message = r.getMessage();
     }

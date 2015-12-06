@@ -1,4 +1,4 @@
-package com.oserion.web.util;
+package com.oserion.framework.web.util;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

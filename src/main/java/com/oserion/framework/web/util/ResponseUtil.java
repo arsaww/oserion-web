@@ -1,4 +1,4 @@
-package com.oserion.web.util;
+package com.oserion.framework.web.util;
 
 /**
  * Created by Arsaww on 12/5/2015.

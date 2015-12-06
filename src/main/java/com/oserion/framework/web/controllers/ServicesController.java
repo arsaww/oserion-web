@@ -1,10 +1,10 @@
-package com.oserion.web.controllers;
+package com.oserion.framework.web.controllers;
 
-import com.oserion.web.bean.Content;
-import com.oserion.web.bean.JsonMessageResponse;
-import com.oserion.web.util.AuthenticationAccess;
-import com.oserion.web.util.JsonBeanBuilder;
-import com.oserion.web.util.ResponseUtil;
+import com.oserion.framework.web.beans.Content;
+import com.oserion.framework.web.beans.MessageResponse;
+import com.oserion.framework.web.util.AuthenticationAccess;
+import com.oserion.framework.web.util.JsonBeanBuilder;
+import com.oserion.framework.web.util.ResponseUtil;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +27,7 @@ public class ServicesController {
 
     @RequestMapping(value = "/content/{contentId}", method = RequestMethod.GET)
     public Object setContent(@PathVariable String contentId) {
-        return new JsonMessageResponse(ResponseUtil.REST);
+        return new MessageResponse(ResponseUtil.REST);
     }
 
     @RequestMapping(value = "/content/{contentId}", method = RequestMethod.PUT)
@@ -36,14 +36,14 @@ public class ServicesController {
             if (AuthenticationAccess.isAdmin(req)) {
                 Content c = (Content) (new JsonBeanBuilder()).createBean(req, Content.class);
                 LOG.log(Level.INFO, "Call to rest Service Content PUT : " + c);
-                return new JsonMessageResponse(ResponseUtil.REST);
+                return new MessageResponse(ResponseUtil.REST);
             } else {
                 resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return new JsonMessageResponse(ResponseUtil.ERROR_401);
+                return new MessageResponse(ResponseUtil.ERROR_401);
             }
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            return new JsonMessageResponse(ResponseUtil.ERROR_500);
+            return new MessageResponse(ResponseUtil.ERROR_500);
         }
     }
 }

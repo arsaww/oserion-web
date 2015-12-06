@@ -1,7 +1,6 @@
-package com.oserion.web.util;
+package com.oserion.framework.web.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oserion.web.bean.Content;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;

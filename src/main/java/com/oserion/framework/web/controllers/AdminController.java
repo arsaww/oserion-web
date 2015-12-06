@@ -1,7 +1,7 @@
-package com.oserion.web.controllers;
+package com.oserion.framework.web.controllers;
 
-import com.oserion.web.util.AuthenticationAccess;
-import com.oserion.web.util.ResponseUtil;
+import com.oserion.framework.web.util.AuthenticationAccess;
+import com.oserion.framework.web.util.ResponseUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
