@@ -1,12 +1,11 @@
 package com.oserion.web.controllers;
 
 import com.oserion.web.util.AuthenticationAccess;
-import com.oserion.web.util.TemplateResponse;
+import com.oserion.web.util.ResponseUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
@@ -20,7 +19,7 @@ import java.util.logging.Logger;
 public class AdminController {
 
     private static final Logger LOG = Logger.getLogger(AdminController.class.getName());
-    private static final String AUTHENTICATION_ACCESS = "osr-access";
+
     private static final String AUTHENTICATION_LOGIN = "login";
     private static final String AUTHENTICATION_PASSWORD = "password";
 
@@ -35,21 +34,16 @@ public class AdminController {
     public String accessAdminUserInterface(HttpServletRequest request, HttpServletResponse response) {
         LOG.log(Level.INFO, "accessAdminUserInterface");
         try {
-            Object access = request.getSession().getAttribute(AUTHENTICATION_ACCESS);
-            if (access != null) {
-                switch ((AuthenticationAccess) access) {
-                    case SUPERADMIN:
-                        return TemplateResponse.getView(TemplateResponse.ADMIN, response);
-                    case ADMIN:
-                        return TemplateResponse.getView(TemplateResponse.ADMIN, response);
-                    case USER:
-                        return TemplateResponse.getView(TemplateResponse.ERROR_401, response);
-                }
+            if(AuthenticationAccess.isAuthenticate(request)){
+                return AuthenticationAccess.isAdmin(request)?
+                        ResponseUtil.ADMIN.getTemplateName():
+                        ResponseUtil.ERROR_401.getTemplateName();
+            } else {
+                return ResponseUtil.LOGIN.getTemplateName();
             }
-            return TemplateResponse.getView(TemplateResponse.LOGIN, response);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "An error occurred while processing the request", e);
-            return TemplateResponse.getView(TemplateResponse.ERROR_500, response);
+            return ResponseUtil.ERROR_500.getTemplateName();
         }
     }
 
@@ -67,18 +61,16 @@ public class AdminController {
             String password = request.getParameter(AUTHENTICATION_PASSWORD);
 
             //TODO : Call a true authentication system
-            if (login != null && password != null &&
-                    login.equals("admin") && password.equals("admin"))
-                request.getSession().setAttribute(AUTHENTICATION_ACCESS, AuthenticationAccess.SUPERADMIN);
-                Cookie authCookie = new Cookie(AUTHENTICATION_ACCESS, AuthenticationAccess.SUPERADMIN.toString());
-                authCookie.setPath("/");
-                response.addCookie(authCookie);
-
-            return accessAdminUserInterface(request, response);
+            if (login != null && password != null && login.equals("admin") && password.equals("admin")){
+                AuthenticationAccess.setAccess(AuthenticationAccess.SUPERADMIN, request, response);
+                return accessAdminUserInterface(request, response);
+            }else {
+                return ResponseUtil.LOGIN.getTemplateName();
+            }
 
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "An error occurred while processing the request", e);
-            return TemplateResponse.getView(TemplateResponse.ERROR_500, response);
+            return ResponseUtil.ERROR_500.getTemplateName();
         }
     }
 

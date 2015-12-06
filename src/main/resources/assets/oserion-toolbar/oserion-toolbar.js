@@ -1,14 +1,7 @@
-'use strict';
-
 (function( $ ) {
     /** START **/
     $.fn.oserion = function() {
-        importManager.init();
-        importManager.addToolBar($(this));
-        this.filter( "a" ).each(function() {
-            var link = $( this );
-            link.append( " (" + link.attr( "href" ) + ")" );
-        });
+        importManager.init($(this));
         return this;
     };
 
@@ -17,19 +10,46 @@
 
         //Private Attribute
         var IS_INIT = false;
+        var loadScript = function( url, callback ) {
+            var script = document.createElement( "script" );
+            script.type = "text/javascript";
+            if(script.readyState) {  //IE
+                script.onreadystatechange = function() {
+                    if ( script.readyState === "loaded" || script.readyState === "complete" ) {
+                        script.onreadystatechange = null;
+                        callback();
+                    }
+                };
+            } else {  //Others
+                script.onload = function() {
+                    callback();
+                };
+            }
+
+            script.src = url;
+            document.getElementsByTagName( "head" )[0].appendChild( script );
+        };
+
+        var NB_SCRIPTS_LOADED = 0;
+        var NB_SCRIPTS_TO_LOAD = 3;
+
+        var addToolBarWhenReady = function(e){
+            NB_SCRIPTS_LOADED++;
+            if(NB_SCRIPTS_LOADED == NB_SCRIPTS_TO_LOAD){
+                toolBarManager.init(e);
+            }
+        };
 
         //Public
         return {
-            init : function(){
+            init : function(e){
                 if(!IS_INIT){
                     IS_INIT = true;
                     $('head').append('<link rel="stylesheet" href="/assets/oserion-toolbar/oserion-toolbar.css" type="text/css" />');
-                    $('head').append('<script src="/assets/tinymce/tinymce.min.js"></script>');
-
+                    loadScript("/assets/oserion-toolbar/oserion-editor.js", function() {addToolBarWhenReady(e);});
+                    loadScript("/assets/oserion-toolbar/oserion-constants.js", function() {addToolBarWhenReady(e);});
+                    loadScript("/assets/tinymce/tinymce.min.js", function() {addToolBarWhenReady(e);});
                 }
-            },
-            addToolBar : function(e){
-                toolBarManager.init(e);
             }
         };
 
@@ -40,14 +60,13 @@
 
         //Private Attribute
         var IS_INIT = false;
-        var TOOLBAR_ID = "oserion_toolbar";
-        var TOOLBAR_CONTAINER_CLASS = "oserion_toolbar_container";
+
         var BUTTON_LIST = [];
 
         //Private Methods
         var addToolbar = function(e){
-            e.addClass(TOOLBAR_CONTAINER_CLASS);
-            e.prepend('<div id="'+TOOLBAR_ID+'"></div>');
+            e.addClass(OSR_TOOLBAR_CONTAINER_CLASS);
+            e.prepend('<div id="'+OSR_TOOLBAR_ID+'"></div>');
             return true;
         };
 
@@ -62,26 +81,14 @@
             e.append('<div id="info_block"></div>');
         };
 
-        var addRichTextEditor = function(e){
-            setTimeout(function(){
-                $('head').append('<script type="text/javascript">tinymce.init({' +
-                'selector: "textarea.tinymce",' +
-                'plugins: ["advlist autolink lists link image charmap print preview anchor","searchreplace visualblocks code fullscreen","insertdatetime media table contextmenu paste"],' +
-                'toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"' +
-                '});</script>');
-            },1500);
-
-            e.append('' +
-            '<div class="richTextEditor">' +
-            '<h1>Edition du contenu</h1>' +
-            '<div class="textarea-container">' +
-            '   <textarea class="tinymce"></textarea>' +
-            '</div>' +
-            '<div class="button-container">' +
-            '   <div class="button cancel">Annuler</div>' +
-            '   <div class="button submit">Valider</div>' +
-            '</div>' +
-            '</div>');
+        var defineButtons = function(){
+            //TODO add all new buttons here
+            var editButton = {
+                info : OSR_EDITABLE_INFO,
+                enable : function(){osrEditor.getType(OSR_EDITABLE_ELEMENT_SELECTOR).highlight();},
+                disable : function(){document.location.reload();}
+            };
+            toolBarManager.addButton(Button(editButton));
         };
 
         //Public
@@ -90,69 +97,18 @@
                 if(!IS_INIT){
                     IS_INIT = true;
                     if(addToolbar(e)){
-                        var f = $("#"+TOOLBAR_ID);
+                        var f = $("#"+OSR_TOOLBAR_ID);
+                        defineButtons();
                         displayButtons(f);
                         addInfoBlock(f);
-                        addRichTextEditor(f);
+                        osrEditor.getType(OSR_EDITABLE_ELEMENT_SELECTOR).init(f);
                     }
-
                 }
             },
             addButton : function(b){
                 BUTTON_LIST.push(b);
             }
         };
-
-    }();
-
-    /** EDITION MANAGER **/
-    var editionManager = function(){
-
-        var EDITABLE_ELEMENT_SELECTOR = ".editable";
-        var RICH_TEXT_EDITOR_SELECTOR = "#oserion_toolbar .richTextEditor";
-        var HIGHLIGHT_ELEMENT_CLASS = "oserion_highlight";
-
-        return {
-
-            highlight : function(){
-                $(EDITABLE_ELEMENT_SELECTOR).each(function(){
-                    var e =  $(this);
-                    e.addClass(HIGHLIGHT_ELEMENT_CLASS);
-                    e.click(function(){editionManager.edit(e)});
-                })
-            },
-            edit : function(e){
-                $(RICH_TEXT_EDITOR_SELECTOR).show();
-                $(EDITABLE_ELEMENT_SELECTOR).each(function(){
-                    if(e !=  $(this)){
-                        e.removeClass(HIGHLIGHT_ELEMENT_CLASS);
-                    }
-                });
-            }
-
-        };
-
-    }();
-
-    /** WINDOW MANAGER **/
-
-    var windowManager = function(){
-
-        var RICH_TEXT_INIT = false;
-
-        return {
-            showRichTextEdition : function(){
-
-                if(!RICH_TEXT_INIT){
-                    $()
-                }
-
-            },
-            hideRichTextEdition : function(){
-
-            }
-        };
-
     }();
 
     /** BUTTON **/
@@ -194,22 +150,17 @@
                     this.enable();
             },
             showLegend : function(){
-                $("#info_block").html(CUSTOM_BUTTON.info);
+                $(OSR_TOOLBAR_INFO_BLOCK_SELECTOR).html(CUSTOM_BUTTON.info);
             },
             hideLegend : function(){
-                $("#info_block").html('');
+                $(OSR_TOOLBAR_INFO_BLOCK_SELECTOR).html('');
             },
             isEnabled : function(){
                 return ENABLED;
             }
         };
     };
-    var editButton = {
-        info : "Editer le contenu",
-        enable : function(){editionManager.highlight()},
-        disable : function(){document.location.reload();}
-    };
-    toolBarManager.addButton(Button(editButton));
+
 
 }( jQuery ));
 var osrGetCookie = function(name) {
@@ -219,6 +170,5 @@ var osrGetCookie = function(name) {
 
 $(document).ready(function(){
     var access = osrGetCookie("osr-access");
-    if(access == "ADMIN" || access == "SUPERADMIN" )
-    $( "body" ).oserion();
+    if(access == "ADMIN" || access == "SUPERADMIN" )  $( "body" ).oserion();
 });

@@ -49,7 +49,7 @@
     width: 800px;
     height: auto;
     background-color: white;
-    border: 1px #1B559F solid;
+    border: 1px #03224A solid;
     padding: 10px;
     display:none;
 
@@ -61,6 +61,21 @@
     margin: 0;
     padding: 0 0 10px 0;
     text-align: center;
+    color:#03065F;
+}
+
+#oserion_toolbar .richTextEditor .button-container .button{
+    float:right;
+    border:1px #03224A solid;
+    background-color:#03065F;
+    padding:4px 7px;
+    font-size:11px;
+    margin:7px 0 0 7px;
+    cursor:pointer;
+    color:white;
+}
+#oserion_toolbar .richTextEditor .button-container .button:hover{
+    background-color:#1b559f;
 }
 
 .textarea-container {
@@ -69,7 +84,7 @@
 }
 
 .oserion_highlight{
-    border:2px #1b559f solid !important;
+    border:2px #03224A solid !important;
     cursor:pointer !important;
 }
 .oserion_highlight:hover{
