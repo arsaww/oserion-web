@@ -5,7 +5,7 @@
 
     <groupId>com.oserion.framework</groupId>
     <artifactId>oserion-web</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>CMS Oserion Webapp</name>
 
@@ -17,6 +17,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.oserion.framework</groupId>
+            <artifactId>oserion.api</artifactId>
+            <version>${version}</version>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
