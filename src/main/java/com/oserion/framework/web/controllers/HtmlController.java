@@ -26,6 +26,7 @@ public class HtmlController {
     public String getHTMLPage(HttpServletRequest req,HttpServletResponse resp) {
         AuthenticationAccess.checkAccess(req, resp);
         LOG.log(Level.INFO, "getHTMLPage");
+        //return ApiFace.getBeans(req);
         //return "HTML PAGE";
         return "temp";
     }
