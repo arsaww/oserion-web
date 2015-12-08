@@ -1,13 +1,8 @@
 package com.oserion.framework.web.controllers;
 
 import com.oserion.framework.api.Api418Facade;
-import com.oserion.framework.api.util.CentraleBean;
 import com.oserion.framework.web.util.AuthenticationAccess;
-import com.oserion.framework.web.util.LoadConfigFile;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,6 +35,9 @@ public class HtmlController {
         
         String variableJavaVM = System.getProperty("oserionWeb.config.file.path");
         LOG.log(Level.INFO , variableJavaVM);
+
+        //TODO
+        //new Api418Facade(getContext.getconnection)
         
         
 //        LoadConfigFile lcf = new LoadConfigFile("oserionWeb.config.file.path");

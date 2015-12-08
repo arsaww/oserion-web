@@ -3,11 +3,23 @@ package com.oserion.framework.web.listeners;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
-import com.oserion.framework.web.util.LoadConfigFile;
+import com.oserion.framework.api.business.IDBConnection;
+import com.oserion.framework.api.util.OserionBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContextListener implements ServletContextListener {
+
+	private static final Logger LOGGER = Logger.getLogger(ContextListener.class.getName());
+
+	private final String PROPERTY_CONFIG_PATH = "oserion.config.path";
+	private final String PROPERTY_DB_CONNECTION = "database.connection";
+
 
 	public void contextDestroyed(ServletContextEvent scl) {
 		// TODO Auto-generated method stub
@@ -15,19 +27,27 @@ public class ContextListener implements ServletContextListener {
 	}
 
 	public void contextInitialized(ServletContextEvent scl) {
-		
-		System.out.println("initialization of servlet oserion-web");
-        LoadConfigFile lcf = new LoadConfigFile("oserionWeb.config.file.path");
-        scl.getServletContext().setAttribute("xmlconf", lcf.xmlConfiguration);
-        
-        String bddUrlBaseMongo = lcf.xmlConfiguration.getString("mongoDB.bddUrlBaseMongo");
-        String bddPortMongo = lcf.xmlConfiguration.getString("mongoDB.bddPortMongo");
-        String bddName = lcf.xmlConfiguration.getString("mongoDB.bddName");
 
-		MongoClient mongoClient = new MongoClient( bddUrlBaseMongo , Integer.parseInt(bddPortMongo) );
-		MongoDatabase database = mongoClient.getDatabase(bddName);
+		LOGGER.log(Level.INFO,"Context Initialisation starts...");
 
-		scl.getServletContext().setAttribute("dbconnection", database);
+		try {
+
+			//1 get properties from config file.
+			Properties properties = new Properties();
+			FileInputStream configFile = new FileInputStream(System.getProperty(PROPERTY_CONFIG_PATH));
+			properties.load(configFile);
+			System.setProperties(properties);
+
+			//2 set context object
+			scl.getServletContext().setAttribute(PROPERTY_DB_CONNECTION, new OserionBuilder().buildDBConnection());
+
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "Context Initialisation failure :", e);
+		}
+
+
+		LOGGER.log(Level.INFO, "Context Initialisation done");
+
 
 	}
 

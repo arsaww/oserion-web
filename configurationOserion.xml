@@ -1,8 +1,0 @@
-<conf>
-	<mongoDB>
-		<bddUrlBaseMongo>localhost</bddUrlBaseMongo>
-		<bddPortMongo>27017</bddPortMongo>
-		<bddName>oserionBD</bddName>
-	</mongoDB>
-</conf>
-
