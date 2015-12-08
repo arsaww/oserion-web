@@ -16,6 +16,7 @@
         <springframework.version>4.2.3.RELEASE</springframework.version>
         <servlet.version>2.5</servlet.version>
         <jackson-databind.version>2.6.3</jackson-databind.version>
+        <commons-configuration.version>1.6</commons-configuration.version>
     </properties>
 
     <dependencies>
@@ -39,6 +40,12 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-databind.version}</version>
         </dependency>
+
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>${commons-configuration.version}</version>
+		</dependency>
 
     </dependencies>
 
