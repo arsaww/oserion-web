@@ -5,6 +5,7 @@ import javax.servlet.ServletContextListener;
 
 import com.oserion.framework.api.business.IDBConnection;
 import com.oserion.framework.api.util.OserionBuilder;
+import com.oserion.framework.web.util.ConfigWebApp;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.FileInputStream;
@@ -16,10 +17,6 @@ import java.util.logging.Logger;
 public class ContextListener implements ServletContextListener {
 
 	private static final Logger LOGGER = Logger.getLogger(ContextListener.class.getName());
-
-	private final String PROPERTY_CONFIG_PATH = "oserion.config.path";
-	private final String PROPERTY_DB_CONNECTION = "database.connection";
-
 
 	public void contextDestroyed(ServletContextEvent scl) {
 		// TODO Auto-generated method stub
@@ -33,12 +30,12 @@ public class ContextListener implements ServletContextListener {
 		try {
 
 			//1 get properties from config file.
-			FileInputStream configFile = new FileInputStream(System.getProperty(PROPERTY_CONFIG_PATH));
+			FileInputStream configFile = new FileInputStream(System.getProperty(ConfigWebApp.PROPERTY_CONFIG_PATH));
 			System.getProperties().load(configFile);
 
 			//2 set context objects
 			IDBConnection c = new OserionBuilder().buildDBConnection();
-			scl.getServletContext().setAttribute(PROPERTY_DB_CONNECTION, c);
+			scl.getServletContext().setAttribute(ConfigWebApp.PROPERTY_DB_CONNECTION, c);
 
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Context Initialisation failure :", e);
