@@ -35,6 +35,7 @@ public class HtmlController {
         //TODO Je viens de faire ca ce matin parce que ca me démangeait, bonne journée ;)
         Api418Facade facade = new Api418Facade(
                  (IDBConnection)req.getSession().getServletContext().getAttribute(ConfigWebApp.PROPERTY_DB_CONNECTION));
+        facade.addPageUrl("premierTemplate","/toto");
 
         return facade.getHTMLPage("premierTemplate");
 
