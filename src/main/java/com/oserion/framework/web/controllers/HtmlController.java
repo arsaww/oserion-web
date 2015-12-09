@@ -1,12 +1,14 @@
 package com.oserion.framework.web.controllers;
 
 import com.oserion.framework.api.Api418Facade;
+import com.oserion.framework.api.business.IDBConnection;
 import com.oserion.framework.web.util.AuthenticationAccess;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
@@ -21,10 +23,8 @@ import java.util.logging.Logger;
 public class HtmlController {
 
     private static final Logger LOG = Logger.getLogger(HtmlController.class.getName());
+    private final String PROPERTY_DB_CONNECTION = "database.connection";
 
-//    @Autowired
-//    private ApplicationContext appContext;
-    
     //TODO: direct mapping to temp.html for the moment
     //@ResponseBody
     @RequestMapping(method = RequestMethod.GET)
@@ -32,28 +32,12 @@ public class HtmlController {
         AuthenticationAccess.checkAccess(req, resp);
         LOG.log(Level.INFO, "getHTMLPage");
 
-        
-        String variableJavaVM = System.getProperty("oserionWeb.config.file.path");
-        LOG.log(Level.INFO , variableJavaVM);
+        //TODO Je viens de faire ca ce matin parce que ca me démangeait, bonne journée ;)
+         Api418Facade facade = new Api418Facade(
+                 (IDBConnection)req.getSession().getServletContext().getAttribute(PROPERTY_DB_CONNECTION));
 
-        //TODO
-        //new Api418Facade(getContext.getconnection)
-        
-        
-//        LoadConfigFile lcf = new LoadConfigFile("oserionWeb.config.file.path");
-//        String bddUrlBaseMongo = lcf.xmlConfiguration.getString("mongoDB.bddUrlBaseMongo");
-//        String bddPortMongo = lcf.xmlConfiguration.getString("mongoDB.bddPortMongo");
-//        String bddName = lcf.xmlConfiguration.getString("mongoDB.bddName");
-//        LOG.log(Level.INFO, bddUrlBaseMongo);
-//        LOG.log(Level.INFO, bddPortMongo);
-//        LOG.log(Level.INFO, bddName);
-        
-        
-//		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CentraleBean.class);
-//		Api418Facade a418f = context.getBean(Api418Facade.class);
-		
-        //return ApiFace.getBeans(req);
-        //return "HTML PAGE";
+        //TODO récupérer le vrai HTML ici à partir de facade
+
         return "temp";
     }
 }
