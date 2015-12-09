@@ -33,13 +33,12 @@ public class ContextListener implements ServletContextListener {
 		try {
 
 			//1 get properties from config file.
-			Properties properties = new Properties();
 			FileInputStream configFile = new FileInputStream(System.getProperty(PROPERTY_CONFIG_PATH));
-			properties.load(configFile);
-			System.setProperties(properties);
+			System.getProperties().load(configFile);
 
-			//2 set context object
-			scl.getServletContext().setAttribute(PROPERTY_DB_CONNECTION, new OserionBuilder().buildDBConnection());
+			//2 set context objects
+			IDBConnection c = new OserionBuilder().buildDBConnection();
+			scl.getServletContext().setAttribute(PROPERTY_DB_CONNECTION, c);
 
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Context Initialisation failure :", e);
