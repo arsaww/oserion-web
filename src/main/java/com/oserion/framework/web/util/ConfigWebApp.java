@@ -5,5 +5,6 @@ package com.oserion.framework.web.util;
  */
 public class ConfigWebApp {
     public static final String PROPERTY_DB_CONNECTION = "database.connection";
+    public static final String PROPERTY_SPRING_CONTEXT = "database.connection";
     public static final String PROPERTY_CONFIG_PATH = "oserion.config.path";
 }

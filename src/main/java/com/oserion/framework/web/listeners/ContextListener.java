@@ -7,6 +7,7 @@ import com.oserion.framework.api.business.IDBConnection;
 import com.oserion.framework.api.util.OserionBuilder;
 import com.oserion.framework.web.util.ConfigWebApp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,8 +35,9 @@ public class ContextListener implements ServletContextListener {
 			System.getProperties().load(configFile);
 
 			//2 set context objects
-			IDBConnection c = new OserionBuilder().buildDBConnection();
-			scl.getServletContext().setAttribute(ConfigWebApp.PROPERTY_DB_CONNECTION, c);
+			AnnotationConfigApplicationContext c = new AnnotationConfigApplicationContext(OserionBuilder.class);
+			scl.getServletContext().setAttribute(ConfigWebApp.PROPERTY_DB_CONNECTION, c.getBean(IDBConnection.class));
+			scl.getServletContext().setAttribute(ConfigWebApp.PROPERTY_SPRING_CONTEXT, c);
 
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE, "Context Initialisation failure :", e);

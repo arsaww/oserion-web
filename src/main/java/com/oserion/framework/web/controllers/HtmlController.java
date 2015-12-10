@@ -33,8 +33,7 @@ public class HtmlController {
         LOG.log(Level.INFO, "getHTMLPage");
 
         //TODO Je viens de faire ca ce matin parce que ca me démangeait, bonne journée ;)
-        Api418Facade facade = new Api418Facade(
-                 (IDBConnection)req.getSession().getServletContext().getAttribute(ConfigWebApp.PROPERTY_DB_CONNECTION));
+        Api418Facade facade = new Api418Facade();
         facade.addPageUrl("premierTemplate","/toto");
 
         return facade.getHTMLPage("premierTemplate");
