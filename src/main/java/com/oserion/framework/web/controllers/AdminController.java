@@ -26,25 +26,11 @@ public class AdminController {
     /**
      * This method access to the User Admin Interface if the the session has enough access to reach it.
      *
-     * @param request
-     * @param response
      * @return HTML View
      */
-    @RequestMapping(value = "/oserion/admin", method = RequestMethod.GET)
-    public String accessAdminUserInterface(HttpServletRequest request, HttpServletResponse response) {
-        LOG.log(Level.INFO, "accessAdminUserInterface");
-        try {
-            if(AuthenticationAccess.isAuthenticate(request)){
-                return AuthenticationAccess.isAdmin(request)?
-                        ResponseUtil.ADMIN.getTemplateName():
-                        ResponseUtil.ERROR_401.getTemplateName();
-            } else {
-                return ResponseUtil.LOGIN.getTemplateName();
-            }
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, "An error occurred while processing the request", e);
-            return ResponseUtil.ERROR_500.getTemplateName();
-        }
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String accessAdminUserInterface() {
+        return "redirect:/admin/index.html";
     }
 
     /**
@@ -54,7 +40,7 @@ public class AdminController {
      * @param response
      * @return admin or login HTML View
      */
-    @RequestMapping(value = "/oserion/signin")
+   /* @RequestMapping(value = "/oserion/signin")
     public String signIn(HttpServletRequest request, HttpServletResponse response) {
         try {
             String login = request.getParameter(AUTHENTICATION_LOGIN);
@@ -72,6 +58,6 @@ public class AdminController {
             LOG.log(Level.SEVERE, "An error occurred while processing the request", e);
             return ResponseUtil.ERROR_500.getTemplateName();
         }
-    }
+    }*/
 
 }
