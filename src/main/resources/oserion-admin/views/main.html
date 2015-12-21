@@ -1,0 +1,28 @@
+<div>
+    <div class="page-heading">
+        <h1>Dashboard</h1>
+    </div>
+    <div class="tool-box">
+        <div class="box">
+            <div class="container" ng-click="view = 'pages';"><h2>Dashboard</h2></div>
+        </div>
+        <div class="box">
+            <div class="container"><h2>Pages &amp; Resources</h2></div>
+        </div>
+        <div class="box">
+            <div class="container"><h2>Content</h2></div>
+        </div>
+        <div class="box">
+            <div class="container"><h2>Data</h2></div>
+        </div>
+        <hr />
+    </div>
+    <div class="container manager" pages-manager ng-show="view == 'pages'">
+        <div class="header"></div>
+        <div class="content">
+            <div style="max-width:600px;min-height:300px;position:relative;" resources-manager></div>
+            <div style="max-width:600px;min-height:300px;position:relative;" templates-manager></div>
+        </div>
+    </div>
+    <div modal></div>
+</div>

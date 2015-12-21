@@ -6,7 +6,8 @@ package com.oserion.framework.web.util;
 public enum ResponseUtil {
     LOGIN ("login","200","OK"),
     ADMIN ("admin","200","OK"),
-    REST (null,"200","OK"),
+    REST_200 (null,"200","OK"),
+    REST_204 (null,"204","No Content"),
     ERROR_401 ("error401","401","You are not allowed to access this page"),
     ERROR_404 ("error404","404","Page not found"),
     ERROR_500 ("error500","500","Internal server error");
