@@ -1,14 +1,14 @@
-package com.oserion.framework.web.util;
+package com.oserion.framework.web.beans.json;
 
 /**
  * Created by Arsaww on 12/5/2015.
  */
-public class JsonResponseMessage {
+public class ResponseMessage {
 
     private String status;
     private String message;
 
-    public JsonResponseMessage(String status, String message){
+    public ResponseMessage(String status, String message){
         this.status = status;
         this.message = message;
     }

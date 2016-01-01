@@ -22,7 +22,7 @@ app.directive('templatesManager', function () {
             $scope.upload = function (file) {
                 $scope.model.showProgress = true;
                 Upload.upload({
-                    url: '/oserion/upload/templates',
+                    url: '/oserion/templates/upload',
                     data: {file: file}
                 }).then(function (resp) {
                     $scope.model.file = null;
@@ -41,7 +41,7 @@ app.directive('templatesManager', function () {
         },
         link: function(scope, element) {},
         template:
-        '<form>' +
+        '<form style="margin:10px;">' +
             '<div class="inner container drop-box" ngf-drop ng-model="model.file">' +
                 '<div class="header">' +
                     '<span>Template Manager</span>' +

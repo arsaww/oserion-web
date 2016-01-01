@@ -2,13 +2,14 @@
 app.factory('modalService', function ($http) {
     var model = {method:"",url:"",data:{},show:false,showInput:false,message:"",error:"",resp:{},title:"",description:""};
     return {
-        setParameters : function(method,url,data,title,description,showInput){
+        setParameters : function(method,url,data,title,description,showInput,callback){
             model.method = method;
             model.url = url;
             model.data = data;
             model.title = title;
             model.description = description;
             model.showInput = showInput;
+            model.callback = callback;
         },
         getParameters : function(){
             return model;
@@ -17,18 +18,20 @@ app.factory('modalService', function ($http) {
             model.show = true;
         },
         hide : function(){
-            model.showInput=false;model.description="";model.title="";model.method="";model.url="";model.data={};model.show=false;model.message="";model.error="";model.resp={};
+            model.showInput=false;model.description="";model.title="";model.method="";model.url="";model.data={};model.show=false;model.message="";model.error="";model.resp={};model.callback=null;
         },
         submit : function(){
             var that = this;
             var req = {
                 method: model.method,
                 url: model.url,
-                data: model.data,
-                headers: {'Content-Type': 'application/json'}
+                headers: {'Content-Type': 'application/json'},
+                data: model.data
             };
             $http(req).then(function (resp) {
                 model.resp = resp.data;
+                if(typeof model.callback === "function")
+                    model.callback(resp.data.message);
                 that.hide();
             }, function (resp) {
                 model.error = "Error "+resp.status+" : an error occured on submit";

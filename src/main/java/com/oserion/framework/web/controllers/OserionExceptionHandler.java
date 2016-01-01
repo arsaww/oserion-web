@@ -21,6 +21,12 @@ public class OserionExceptionHandler {
 
     private static final String ADMIN_LOGIN_PAGE = "/admin";
 
+    @ExceptionHandler(Exception.class)
+    public @ResponseBody String internalError(Exception e, HttpServletRequest req, HttpServletResponse resp) {
+        e.printStackTrace();
+        return "Other Exception";
+    }
+
     @ExceptionHandler(InternalErrorException.class)
     public @ResponseBody String internalError(HttpServletRequest req, HttpServletResponse resp) {
         resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -36,7 +42,9 @@ public class OserionExceptionHandler {
     @ExceptionHandler(AdminLevelRequiredException.class)
     public @ResponseBody String unauthorized(HttpServletRequest req, HttpServletResponse resp) {
         resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        return "<html><body>Request unauthorized <script type='text/javascript'>document.location.href='/admin';</script></body></html>";
+        return "<html><body>Request unauthorized " +
+                    "<script type='text/javascript'>document.location.href='"+ADMIN_LOGIN_PAGE+"';</script>" +
+                "</body></html>";
     }
 
 }

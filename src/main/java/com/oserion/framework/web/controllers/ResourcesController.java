@@ -1,19 +1,17 @@
 package com.oserion.framework.web.controllers;
 
-import com.oserion.framework.api.Api418Facade;
-import com.oserion.framework.web.beans.Directory;
+import com.oserion.framework.web.beans.json.Directory;
+import com.oserion.framework.web.beans.json.FileProperties;
 import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.exceptions.InternalErrorException;
-import com.oserion.framework.web.util.JsonResponseMessage;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
+import com.oserion.framework.web.beans.json.ResponseMessage;
+import org.apache.commons.io.FileUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.*;
@@ -21,13 +19,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/oserion/upload")
-public class UploadController extends ControllerOserion {
+@RequestMapping("/oserion/resources")
+public class ResourcesController extends ControllerOserion {
 
-    private static final Logger LOG = Logger.getLogger(UploadController.class.getName());
+    private static final Logger LOG = Logger.getLogger(ResourcesController.class.getName());
     private static final String RESSOURCES_PATH_PREFIX = "/WEB-INF";
 
-    @RequestMapping(value="/resources", method = RequestMethod.POST)
+    @RequestMapping(value="/upload", method = RequestMethod.POST)
     public Object upload(@RequestParam("file") MultipartFile file,
                        @RequestParam("path") String filePath,
                        MultipartHttpServletRequest req,
@@ -47,7 +45,7 @@ public class UploadController extends ControllerOserion {
                 fos.close();
             }
             LOG.log(Level.INFO, String.format("receive %s from %s", file.getOriginalFilename(), path));
-            return new JsonResponseMessage("OK","/resources/"+filePath+file.getOriginalFilename());
+            return new ResponseMessage("OK","/resources/"+filePath+file.getOriginalFilename());
 
         }catch (Exception e){
             throw new InternalErrorException();
@@ -55,39 +53,53 @@ public class UploadController extends ControllerOserion {
 
     }
 
-
-    @RequestMapping(value="/templates", method = RequestMethod.POST)
-    public Object addTemplate(@RequestParam("file") MultipartFile file,
-                         MultipartHttpServletRequest req,
+    @RequestMapping(value="/rename", method = RequestMethod.POST)
+    public Object rename(@RequestBody FileProperties fp,
+                         HttpServletRequest req,
                          HttpServletResponse resp) throws AdminLevelRequiredException, InternalErrorException {
         checkAdminAccess(req, resp);
-
         try {
-            ByteArrayInputStream stream = new   ByteArrayInputStream(file.getBytes());
-            String strTemplate = IOUtils.toString(stream, "UTF-8");
-            new Api418Facade().uploadTemplateFromHtml(strTemplate,
-                    FilenameUtils.removeExtension(file.getOriginalFilename()));
-            LOG.log(Level.INFO, file.getOriginalFilename() + "was successfully inserted as a template");
-            return new JsonResponseMessage("OK",file.getOriginalFilename() + "was successfully inserted as a template");
-
+            if(!fp.getPath().startsWith("/resources")) throw  new InternalErrorException();
+            String path = getContext(req).getRealPath(RESSOURCES_PATH_PREFIX +fp.getPath());
+            File f = new File(path+"/"+fp.getOrigin());
+            f.renameTo(new File(path+"/"+fp.getValue()));
+            return new ResponseMessage("OK","'"+fp.getOrigin()+"' successfully renamed to '"+fp.getValue()+"'");
         }catch (Exception e){
-            throw new InternalErrorException(e);
+            throw new InternalErrorException();
         }
     }
 
-    @RequestMapping(value="/resources", method = RequestMethod.PUT)
-    public Object rename(@RequestParam("value") String fileName,
-                         @RequestParam("origin") String origin,
-                         @RequestParam("path") String filePath,
-                         MultipartHttpServletRequest req,
+    @RequestMapping(value="/mkdir", method = RequestMethod.POST)
+    public Object mkdir(@RequestBody FileProperties fp,
+                         HttpServletRequest req,
                          HttpServletResponse resp) throws AdminLevelRequiredException, InternalErrorException {
         checkAdminAccess(req, resp);
         try {
-            if(!filePath.startsWith("/resources")) throw new InternalErrorException();
-            String path = getContext(req).getRealPath(RESSOURCES_PATH_PREFIX +filePath+"/");
-            File f = new File(path+origin);
-            f.renameTo(new File(path+fileName));
-            return new JsonResponseMessage("OK",origin+" => "+fileName+" updated");
+            if(!fp.getPath().startsWith("/resources")) throw  new InternalErrorException();
+            String path = getContext(req).getRealPath(RESSOURCES_PATH_PREFIX +fp.getPath());
+            File f = new File(path+"/"+fp.getValue());
+            f.mkdir();
+            return new ResponseMessage("OK","directory '"+fp.getValue()+"' successfully created");
+        }catch (Exception e){
+            throw new InternalErrorException();
+        }
+
+    }
+
+    @RequestMapping(value="/delete", method = RequestMethod.POST)
+    public Object delete(@RequestBody FileProperties fp,
+                         HttpServletRequest req,
+                         HttpServletResponse resp) throws AdminLevelRequiredException, InternalErrorException {
+        checkAdminAccess(req, resp);
+        try {
+            if(!fp.getPath().startsWith("/resources")) throw  new InternalErrorException();
+            String path = getContext(req).getRealPath(RESSOURCES_PATH_PREFIX +fp.getPath());
+            File f = new File(path+"/"+fp.getValue());
+            if(f.isDirectory())
+                FileUtils.deleteDirectory(f);
+            else
+                f.delete();
+            return new ResponseMessage("OK","'"+fp.getValue()+"' successfully deleted");
 
         }catch (Exception e){
             throw new InternalErrorException();
@@ -95,12 +107,12 @@ public class UploadController extends ControllerOserion {
 
     }
 
-    @RequestMapping(value="/resources/**", method = RequestMethod.GET)
-    public Object upload(HttpServletRequest req,
+    @RequestMapping(value="/**", method = RequestMethod.GET)
+    public Object getRessource(HttpServletRequest req,
                          HttpServletResponse resp) throws AdminLevelRequiredException, InternalErrorException {
         checkAdminAccess(req, resp);
         try{
-            String[] splittedUrl = req.getRequestURL().toString().split("/oserion/upload/resources");
+            String[] splittedUrl = req.getRequestURL().toString().split("/oserion/resources");
             String endOfPath = splittedUrl.length > 1 ? splittedUrl[1] : "";
             endOfPath = "/resources"+endOfPath;
             Directory d = new Directory(endOfPath);

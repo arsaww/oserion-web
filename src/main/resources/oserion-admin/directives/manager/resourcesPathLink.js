@@ -9,10 +9,13 @@ app.directive('resourcesPathLink', function () {
             $scope.model = {};
             $scope.getRessources = $scope.$parent.getRessources;
             $scope.getNavigationPath = function(folderPath){
+                $scope.truncate = false;
                 if(folderPath){
                     var dir = [];
                     var directories = folderPath.split("/");
-                    for(var i = 1; i < directories.length; i++){
+                    if(directories.length > 5)
+                        $scope.truncate = true;
+                    for(var i = $scope.truncate ? directories.length-3 : 1; i < directories.length; i++){
                         var p = {};
                         if(i < directories.length - 1){
                             var link = "";
@@ -38,25 +41,14 @@ app.directive('resourcesPathLink', function () {
         },
         link: function(scope, element) {},
         template:
+        '<span ng-show="truncate">' +
+            '/<span class="link" ng-click="getRessources(\'/resources\');">resources</span>/...' +
+        '</span>' +
         '<span ng-repeat="p in model.dir">' +
             '/<span ng-class="p.class" ng-click="getRessources(p.link);">' +
                 '{{p.name}}' +
             '</span>' +
-        '</span>' +
-        '<div class="ressources-corner-link">' +
-            '<i class="fa fa-folder-o"></i><hr />' +
-        '</div>'
-
-        /*<button class="button" >Select</button>
-        <button class="button" type="submit" ng-click="submit()">submit</button>
-        <!--<div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
-    ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-    ngf-resize="{width: 100, height: 100}">Select</div>
-
-
-        </form>-->' +
-        '' +
-        ''*/
+        '</span>'
     };
 });
 

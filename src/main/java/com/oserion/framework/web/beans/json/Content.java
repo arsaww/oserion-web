@@ -1,4 +1,4 @@
-package com.oserion.framework.web.beans;
+package com.oserion.framework.web.beans.json;
 
 /**
  * Created by Arsaww on 12/6/2015.

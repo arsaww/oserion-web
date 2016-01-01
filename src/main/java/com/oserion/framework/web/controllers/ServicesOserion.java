@@ -1,14 +1,10 @@
 package com.oserion.framework.web.controllers;
 
-import com.oserion.framework.web.beans.Content;
-import com.oserion.framework.web.beans.Login;
-import com.oserion.framework.web.beans.MessageResponse;
+import com.oserion.framework.web.beans.json.Login;
 import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.exceptions.InternalErrorException;
 import com.oserion.framework.web.util.AuthenticationAccess;
-import com.oserion.framework.web.util.JsonBeanBuilder;
-import com.oserion.framework.web.util.JsonResponseMessage;
-import com.oserion.framework.web.util.ResponseUtil;
+import com.oserion.framework.web.beans.json.ResponseMessage;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,16 +22,16 @@ public class ServicesOserion extends ControllerOserion {
 
     private static final Logger LOG = Logger.getLogger(ServicesOserion.class.getName());
 
-    @RequestMapping(value = "/content/{contentId}", method = RequestMethod.GET)
+  /*  @RequestMapping(value = "/content/{contentId}", method = RequestMethod.GET)
     public Object setContent(@PathVariable String contentId) {
         return new MessageResponse(ResponseUtil.REST_200);
     }
 
     @RequestMapping(value = "/content/{contentId}", method = RequestMethod.PUT)
-    public Object updateContent(@PathVariable String contentId,HttpServletRequest req, HttpServletResponse resp) {
+    public Object updateContent(@PathVariable String contentId, @RequestBody Content c,
+                                HttpServletRequest req, HttpServletResponse resp) {
         try {
             if (AuthenticationAccess.isAdmin(req, resp)) {
-                Content c = (Content) (new JsonBeanBuilder()).createBean(req, Content.class);
                 LOG.log(Level.INFO, "Call to rest Service Content PUT : " + c);
                 return new MessageResponse(ResponseUtil.REST_200);
             } else {
@@ -46,7 +42,7 @@ public class ServicesOserion extends ControllerOserion {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return new MessageResponse(ResponseUtil.ERROR_500);
         }
-    }
+    }*/
 
     /**
      * Common sign in method checking login and password from the request attributes
@@ -56,12 +52,12 @@ public class ServicesOserion extends ControllerOserion {
      * @return admin or login HTML View
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Object signIn(HttpServletRequest req, HttpServletResponse resp) throws InternalErrorException {
+    public Object signIn(@RequestBody Login l, HttpServletRequest req, HttpServletResponse resp)
+            throws InternalErrorException {
         try {
-            Login l = (Login) (new JsonBeanBuilder()).createBean(req, Login.class);
             if ("admin".equals(l.getLogin()) && "admin".equals(l.getPassword())){
                 AuthenticationAccess.setAccess(AuthenticationAccess.SUPERADMIN, req, resp);
-                return new JsonResponseMessage("OK","Authentication successfull");
+                return new ResponseMessage("OK","Authentication successful");
             } else {
                 throw new AdminLevelRequiredException();
             }

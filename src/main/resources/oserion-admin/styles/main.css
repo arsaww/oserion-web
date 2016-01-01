@@ -35,7 +35,7 @@ input[type="number"], input[type="password"], input[type="text"], select, textar
 
 /** Login **/
 .login.container, .modal .container{width:280px;margin:100px auto;z-index: 100;}
-.modal label{padding: 10px 0; display: inline-block;}
+.modal label{padding: 10px 0; display: inline-block; line-height:1.5;}
 .login-box{display:inline-block;width:200px;vertical-align: middle;height:100px;border:1px red solid;}
 
 /** Admin UI **/

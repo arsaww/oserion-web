@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * Main controller for all expected HTML response
  */
 @Controller
-@RequestMapping("*")
+@RequestMapping("/^(?!admin)(?!oserion)")
 public class HtmlOserion extends ControllerOserion {
 
     private static final Logger LOG = Logger.getLogger(HtmlOserion.class.getName());
