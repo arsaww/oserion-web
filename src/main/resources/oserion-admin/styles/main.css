@@ -1,4 +1,4 @@
-body {background-color:#fafafa; color:#455a64; font-family: 'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif;font-size:13px;}
+body {background-color:#fafafa; color:#455a64; font-family: 'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif;font-size:13px;min-width:1097px}
 button{outline: none;}
 
 /** Global border:0px solid #e0e0e0 **/
@@ -11,16 +11,17 @@ button{outline: none;}
 .footer .button:hover, button.button:hover{border-color:#B2B2B2;}
 .success {text-align:center;font-size:11px;color:green;line-height:30px;vertical-align:middle;}
 .error {text-align:center;font-size:11px;color:red;line-height:30px;vertical-align:middle;}
-.inner.container{padding-top:35px;text-align: left;border:1px solid #e0e0e0; box-shadow: none;}
+.inner.container{padding-top:35px;text-align: left;border:1px solid #e0e0e0; box-shadow: none;font-size:11px;}
 .inner .header{height:30px; padding:0 20px; font-weight: bold;text-align:left;line-height:30px;}
 .inner .content div {border-bottom:1px solid #e0e0e0;padding:10px;position:relative;}
+.inner .content div.no-border {border:none;}
 .inner .content div.success, .inner .content div.error {cursor:pointer;}
 .link{text-decoration: underline;cursor:pointer;}
 .link:hover{color:#4E9CC1;}
 .modal{position: fixed;    font-family: Arial, Helvetica, sans-serif;    top: 0;    right: 0;    bottom: 0;    left: 0;    background: rgba(199, 199, 199, 0.8);    z-index: 100; }
 
 /** Affinate **/
-.content .vertical-small{max-height: 300px;overflow-y: auto;}
+.content .vertical-small{max-height: 250px;min-height:250px;overflow-y: auto;}
 
 
 /** Float cleaner **/
@@ -56,5 +57,5 @@ input[type="number"], input[type="password"], input[type="text"], select, textar
 .ressources-corner-link i {float: right; margin: 10px 5px;cursor:pointer;}
 .ressources-corner-link i:hover {color:#4E9CC1;}
 .inner .content div.ressources-corner-link {position: absolute;top: 0;right: 10px;margin: 0;padding: 0;}
-.drop-box.dragover {border:3px blue solid;}
+.drop-box.dragover {border:1px blue solid;}
 .header .progress{position: absolute;top: 0;right: 35px;}

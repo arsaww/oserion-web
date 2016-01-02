@@ -103,6 +103,7 @@ app.directive('resourcesManager', function () {
         '<form style="margin:10px;">' +
         '<div class="inner container drop-box" ngf-drop ng-model="model.file">' +
             '<div class="header">' +
+                '<span>Files: </span>' +
                 '<span resources-path-link path="model.current.path"></span>' +
                 '<span class="progress" ng-show="model.showProgress">{{model.progress}}%</span>' +
                 '<div class="ressources-corner-link">' +
