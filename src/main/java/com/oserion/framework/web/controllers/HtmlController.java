@@ -15,9 +15,9 @@ import java.util.logging.Logger;
  * Main controller for all expected HTML response
  */
 @Controller
-public class HtmlOserion extends ControllerOserion {
+public class HtmlController extends OserionController {
 
-    private static final Logger LOG = Logger.getLogger(HtmlOserion.class.getName());
+    private static final Logger LOG = Logger.getLogger(HtmlController.class.getName());
 
     @ResponseBody
     @RequestMapping(value = "/**html", method = RequestMethod.GET)

@@ -1,10 +1,10 @@
 package com.oserion.framework.web.controllers;
 
-import com.oserion.framework.web.beans.json.Directory;
-import com.oserion.framework.web.beans.json.FileProperties;
+import com.oserion.framework.web.beans.json.JsonDirectory;
+import com.oserion.framework.web.beans.json.JsonFileProperties;
 import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.exceptions.InternalErrorException;
-import com.oserion.framework.web.beans.json.ResponseMessage;
+import com.oserion.framework.web.beans.json.JsonResponseMessage;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/oserion/resources")
-public class ResourcesController extends ControllerOserion {
+public class ResourcesController extends OserionController {
 
     private static final Logger LOG = Logger.getLogger(ResourcesController.class.getName());
     private static final String RESSOURCES_PATH_PREFIX = "/WEB-INF";
@@ -45,7 +45,7 @@ public class ResourcesController extends ControllerOserion {
                 fos.close();
             }
             LOG.log(Level.INFO, String.format("receive %s from %s", file.getOriginalFilename(), path));
-            return new ResponseMessage("OK","/resources/"+filePath+file.getOriginalFilename());
+            return new JsonResponseMessage("OK","/resources/"+filePath+file.getOriginalFilename());
 
         }catch (Exception e){
             throw new InternalErrorException();
@@ -54,7 +54,7 @@ public class ResourcesController extends ControllerOserion {
     }
 
     @RequestMapping(value="/rename", method = RequestMethod.POST)
-    public Object rename(@RequestBody FileProperties fp,
+    public Object rename(@RequestBody JsonFileProperties fp,
                          HttpServletRequest req,
                          HttpServletResponse resp) throws AdminLevelRequiredException, InternalErrorException {
         checkAdminAccess(req, resp);
@@ -63,14 +63,14 @@ public class ResourcesController extends ControllerOserion {
             String path = getContext(req).getRealPath(RESSOURCES_PATH_PREFIX +fp.getPath());
             File f = new File(path+"/"+fp.getOrigin());
             f.renameTo(new File(path+"/"+fp.getValue()));
-            return new ResponseMessage("OK","'"+fp.getOrigin()+"' successfully renamed to '"+fp.getValue()+"'");
+            return new JsonResponseMessage("OK","'"+fp.getOrigin()+"' successfully renamed to '"+fp.getValue()+"'");
         }catch (Exception e){
             throw new InternalErrorException();
         }
     }
 
     @RequestMapping(value="/mkdir", method = RequestMethod.POST)
-    public Object mkdir(@RequestBody FileProperties fp,
+    public Object mkdir(@RequestBody JsonFileProperties fp,
                          HttpServletRequest req,
                          HttpServletResponse resp) throws AdminLevelRequiredException, InternalErrorException {
         checkAdminAccess(req, resp);
@@ -79,7 +79,7 @@ public class ResourcesController extends ControllerOserion {
             String path = getContext(req).getRealPath(RESSOURCES_PATH_PREFIX +fp.getPath());
             File f = new File(path+"/"+fp.getValue());
             f.mkdir();
-            return new ResponseMessage("OK","directory '"+fp.getValue()+"' successfully created");
+            return new JsonResponseMessage("OK","directory '"+fp.getValue()+"' successfully created");
         }catch (Exception e){
             throw new InternalErrorException();
         }
@@ -87,7 +87,7 @@ public class ResourcesController extends ControllerOserion {
     }
 
     @RequestMapping(value="/delete", method = RequestMethod.POST)
-    public Object delete(@RequestBody FileProperties fp,
+    public Object delete(@RequestBody JsonFileProperties fp,
                          HttpServletRequest req,
                          HttpServletResponse resp) throws AdminLevelRequiredException, InternalErrorException {
         checkAdminAccess(req, resp);
@@ -99,7 +99,7 @@ public class ResourcesController extends ControllerOserion {
                 FileUtils.deleteDirectory(f);
             else
                 f.delete();
-            return new ResponseMessage("OK","'"+fp.getValue()+"' successfully deleted");
+            return new JsonResponseMessage("OK","'"+fp.getValue()+"' successfully deleted");
 
         }catch (Exception e){
             throw new InternalErrorException();
@@ -115,14 +115,14 @@ public class ResourcesController extends ControllerOserion {
             String[] splittedUrl = req.getRequestURL().toString().split("/oserion/resources");
             String endOfPath = splittedUrl.length > 1 ? splittedUrl[1] : "";
             endOfPath = "/resources"+endOfPath;
-            Directory d = new Directory(endOfPath);
+            JsonDirectory d = new JsonDirectory(endOfPath);
             try {
                 DirectoryStream<Path> paths = Files.newDirectoryStream(
                         Paths.get(getContext(req).getRealPath(RESSOURCES_PATH_PREFIX + endOfPath)));
 
                 for(Path p : paths){
                     if(Files.isDirectory(p)){
-                        d.addDirectory(new Directory(endOfPath + "/" + p.getFileName().toString()));
+                        d.addDirectory(new JsonDirectory(endOfPath + "/" + p.getFileName().toString()));
                     }else if(Files.isRegularFile(p)){
                         d.addFile(p.getFileName().toString());
                     }

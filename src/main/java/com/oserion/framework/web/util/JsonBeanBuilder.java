@@ -7,8 +7,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+@Deprecated
 /**
- * Created by Arsaww on 12/6/2015.
+ * Let's keep it here, it could be usefull later
  */
 public class JsonBeanBuilder <T>{
 

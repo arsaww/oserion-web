@@ -3,7 +3,7 @@ package com.oserion.framework.web.beans.json;
 /**
  * Created by Arsaww on 12/6/2015.
  */
-public class Login {
+public class JsonLogin {
 
     public String getLogin() {
         return login;

@@ -3,24 +3,24 @@ package com.oserion.framework.web.beans.json;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Directory {
+public class JsonDirectory {
 
     private String path;
     private String name;
-    private List<Directory> directories = new ArrayList();
+    private List<JsonDirectory> directories = new ArrayList();
     private List<String> files = new ArrayList();
 
-    public Directory(String path){
+    public JsonDirectory(String path){
         this.path = path;
         String[] subDirectories = path.split("/");
         this.name = subDirectories[subDirectories.length-1];
     }
 
-    public List<Directory> getDirectories() {
+    public List<JsonDirectory> getDirectories() {
         return directories;
     }
 
-    public void addDirectory(Directory d) {
+    public void addDirectory(JsonDirectory d) {
         this.directories.add(d);
     }
 

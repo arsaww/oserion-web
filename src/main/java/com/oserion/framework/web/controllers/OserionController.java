@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ControllerOserion {
+public class OserionController {
 
     protected void checkAdminAccess(HttpServletRequest req, HttpServletResponse resp) throws AdminLevelRequiredException {
         if(!AuthenticationAccess.isAdmin(req, resp)) throw new AdminLevelRequiredException();

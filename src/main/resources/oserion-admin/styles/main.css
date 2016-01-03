@@ -14,7 +14,7 @@ button{outline: none;}
 .inner.container{padding-top:35px;text-align: left;border:1px solid #e0e0e0; box-shadow: none;font-size:11px;}
 .inner .header{height:30px; padding:0 20px; font-weight: bold;text-align:left;line-height:30px;}
 .inner .content div {border-bottom:1px solid #e0e0e0;padding:10px;position:relative;}
-.inner .content div.no-border {border:none;}
+.inner .content div.no-border {border:none;padding-bottom:0;}
 .inner .content div.success, .inner .content div.error {cursor:pointer;}
 .link{text-decoration: underline;cursor:pointer;}
 .link:hover{color:#4E9CC1;}
@@ -34,7 +34,7 @@ input[type="number"], input[type="password"], input[type="text"], select, textar
     width: 100%; padding: 2px 5px; line-height: 20px; color: #555; height: 28px; border:1px #e0e0e0 solid;margin:0 0 16px 0;
 }
 
-/** Login **/
+/** JsonLogin **/
 .login.container, .modal .container{width:280px;margin:100px auto;z-index: 100;}
 .modal label{padding: 10px 0; display: inline-block; line-height:1.5;}
 .login-box{display:inline-block;width:200px;vertical-align: middle;height:100px;border:1px red solid;}
@@ -56,6 +56,6 @@ input[type="number"], input[type="password"], input[type="text"], select, textar
 .ressources-corner-link {position: absolute;top: 0; right: 10px;}
 .ressources-corner-link i {float: right; margin: 10px 5px;cursor:pointer;}
 .ressources-corner-link i:hover {color:#4E9CC1;}
-.inner .content div.ressources-corner-link {position: absolute;top: 0;right: 10px;margin: 0;padding: 0;}
+.inner .content div.ressources-corner-link {position: absolute;top: 0;right: 10px;margin: 0;padding: 0;border:none;}
 .drop-box.dragover {border:1px blue solid;}
 .header .progress{position: absolute;top: 0;right: 35px;}
