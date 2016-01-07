@@ -1,7 +1,7 @@
 package com.oserion.framework.web.controllers;
 
-import com.oserion.framework.web.beans.json.JsonLogin;
-import com.oserion.framework.web.beans.json.JsonResponseMessage;
+import com.oserion.framework.web.json.beans.JsonLogin;
+import com.oserion.framework.web.json.beans.JsonResponseMessage;
 import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.exceptions.InternalErrorException;
 import com.oserion.framework.web.util.AuthenticationAccess;

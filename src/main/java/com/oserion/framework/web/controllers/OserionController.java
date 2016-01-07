@@ -1,18 +1,15 @@
 package com.oserion.framework.web.controllers;
 
 
-import com.oserion.framework.api.Api418Facade;
+import com.oserion.framework.api.OserionApiFacade;
 import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.util.AppConfig;
 import com.oserion.framework.web.util.AuthenticationAccess;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.web.HttpRequestHandler;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class OserionController {
 
@@ -24,8 +21,8 @@ public class OserionController {
         return request.getSession().getServletContext();
     }
 
-    protected Api418Facade getApiFacade(HttpServletRequest request){
-        return getSpringContext(request).getBean(Api418Facade.class);
+    protected OserionApiFacade getApiFacade(HttpServletRequest request){
+        return getSpringContext(request).getBean(OserionApiFacade.class);
     }
 
     protected AnnotationConfigApplicationContext getSpringContext(HttpServletRequest request){

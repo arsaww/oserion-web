@@ -1,10 +1,10 @@
 package com.oserion.framework.web.controllers;
 
-import com.oserion.framework.web.beans.json.JsonDirectory;
-import com.oserion.framework.web.beans.json.JsonFileProperties;
+import com.oserion.framework.web.json.beans.JsonDirectory;
+import com.oserion.framework.web.json.beans.JsonFileProperties;
 import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.exceptions.InternalErrorException;
-import com.oserion.framework.web.beans.json.JsonResponseMessage;
+import com.oserion.framework.web.json.beans.JsonResponseMessage;
 import org.apache.commons.io.FileUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

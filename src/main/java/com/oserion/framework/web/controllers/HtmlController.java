@@ -23,7 +23,8 @@ public class HtmlController extends OserionController {
     @RequestMapping(value = "/**html", method = RequestMethod.GET)
     public String getHTMLPage(HttpServletRequest req,HttpServletResponse resp) {
         AuthenticationAccess.checkAccess(req, resp);
-        return getApiFacade(req).getFullTemplateFromName(req.getRequestURI());
+        //TODO JFE
+        return null; //getApiFacade(req).getFullTemplateFromName(req.getRequestURI());
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

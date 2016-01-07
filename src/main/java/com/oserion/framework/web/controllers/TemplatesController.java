@@ -1,9 +1,9 @@
 package com.oserion.framework.web.controllers;
 
-import com.oserion.framework.web.beans.json.JsonTemplatePage;
+import com.oserion.framework.web.json.beans.JsonTemplatePage;
 import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.exceptions.InternalErrorException;
-import com.oserion.framework.web.beans.json.JsonResponseMessage;
+import com.oserion.framework.web.json.beans.JsonResponseMessage;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +29,9 @@ public class TemplatesController extends OserionController {
         checkAdminAccess(req, resp);
         try {
             ByteArrayInputStream stream = new ByteArrayInputStream(file.getBytes());
-            String strTemplate = IOUtils.toString(stream, "UTF-8");
+             String strTemplate = IOUtils.toString(stream, "UTF-8");
 
-            getApiFacade(req).insertTemplate(
+            getApiFacade(req).createTemplate(
                     FilenameUtils.removeExtension(file.getOriginalFilename()),
                     strTemplate
             );
@@ -50,7 +50,8 @@ public class TemplatesController extends OserionController {
                               HttpServletResponse resp) throws AdminLevelRequiredException, InternalErrorException {
         checkAdminAccess(req, resp);
         try {
-            getApiFacade(req).addPageUrl(tp.getTemplate(),tp.getValue());
+            //TODO JFE
+            //getApiFacade(req).addPageUrl(tp.getTemplate(),tp.getValue());
             return new JsonResponseMessage("OK","the page '" +tp.getValue()+"' was successfully created");
         }catch (Exception e){
             throw new InternalErrorException(e);
@@ -64,7 +65,8 @@ public class TemplatesController extends OserionController {
         try {
 
             //TODO JFE
-            return getApiFacade(req).selectTemplates();
+           //getApiFacade(req).selectTemplates();
+            return null;
 
         }catch (Exception e){
             throw new InternalErrorException(e);

@@ -1,4 +1,4 @@
-package com.oserion.framework.web.beans.json;
+package com.oserion.framework.web.json.beans;
 
 import java.util.ArrayList;
 import java.util.List;
