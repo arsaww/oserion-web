@@ -51,7 +51,7 @@ public class TemplatesController extends OserionController {
         checkAdminAccess(req, resp);
         try {
             //TODO JFE
-            //getApiFacade(req).addPageUrl(tp.getTemplate(),tp.getValue());
+            getApiFacade(req).addPageUrl(tp.getTemplate(),tp.getValue());
             return new JsonResponseMessage("OK","the page '" +tp.getValue()+"' was successfully created");
         }catch (Exception e){
             throw new InternalErrorException(e);
@@ -64,9 +64,7 @@ public class TemplatesController extends OserionController {
         checkAdminAccess(req, resp);
         try {
 
-            //TODO JFE
-           //getApiFacade(req).selectTemplates();
-            return null;
+            return  getApiFacade(req).getTemplates();
 
         }catch (Exception e){
             throw new InternalErrorException(e);
