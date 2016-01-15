@@ -1,5 +1,9 @@
 package com.oserion.framework.web.controllers;
 
+import com.oserion.framework.api.exceptions.OserionDatabaseException;
+import com.oserion.framework.api.exceptions.OserionDatabaseNotFoundException;
+import com.oserion.framework.web.exceptions.InternalErrorException;
+import com.oserion.framework.web.exceptions.NotFoundException;
 import com.oserion.framework.web.util.AuthenticationAccess;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,10 +25,16 @@ public class HtmlController extends OserionController {
 
     @ResponseBody
     @RequestMapping(value = "/**html", method = RequestMethod.GET)
-    public String getHTMLPage(HttpServletRequest req,HttpServletResponse resp) {
+    public String getHTMLPage(HttpServletRequest req,HttpServletResponse resp) throws InternalErrorException, NotFoundException {
         AuthenticationAccess.checkAccess(req, resp);
-        //TODO JFE
-        return null; //getApiFacade(req).getFullTemplateFromName(req.getRequestURI());
+        try {
+            return getApiFacade(req).getHtmlPage(req.getRequestURI(), AuthenticationAccess.isAdmin(req, resp));
+        } catch (OserionDatabaseNotFoundException e) {
+            throw new NotFoundException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalErrorException(e);
+        }
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

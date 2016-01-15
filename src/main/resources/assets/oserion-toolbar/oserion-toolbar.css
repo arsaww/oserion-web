@@ -1,5 +1,5 @@
 .oserion_toolbar_container {
-    margin-top: 25px;
+    margin-top: 35px;
     position: relative;
 }
 
@@ -8,13 +8,14 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 23px;
+    height: 30px;
     padding: 3px;
     float: right;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
     border: 1px #DADADA solid;
     border-bottom: 1px #bfbfbf solid;
     border-right: 1px #bfbfbf solid;
-    background-color: #dfdfdf;
+    background-color: #DCDCDC;
     z-index: 1000;
 }
 
@@ -32,9 +33,9 @@
 }
 
 #info_block {
-    color: #1b559f;
+    color: #455a64;
     width: auto;
-    font-family: Arial;
+    font-family:'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif;
     font-size: 11px;
     line-height: 23px;
     cursor: pointer;
@@ -49,33 +50,35 @@
     width: 800px;
     height: auto;
     background-color: white;
-    border: 1px #03224A solid;
+    border: 1px #e0e0e0 solid;
     padding: 10px;
     display:none;
 
 }
 
 #oserion_toolbar .richTextEditor h1 {
-    font-family: Arial;
+    font-family:'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif;
     font-size: 12px;
     margin: 0;
     padding: 0 0 10px 0;
     text-align: center;
-    color:#03065F;
+    color:#455a64;
 }
 
 #oserion_toolbar .richTextEditor .button-container .button{
+    font-family:'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif;
     float:right;
-    border:1px #03224A solid;
-    background-color:#03065F;
+    border:1px #e0e0e0 solid;
+    background-color: #fafafa;
     padding:4px 7px;
     font-size:11px;
     margin:7px 0 0 7px;
     cursor:pointer;
-    color:white;
+    color:#455a64;
+    line-height: 2;
 }
 #oserion_toolbar .richTextEditor .button-container .button:hover{
-    background-color:#1b559f;
+    border:1px #B2B2B2 solid;
 }
 
 .textarea-container {
@@ -84,11 +87,11 @@
 }
 
 .oserion_highlight{
-    border:2px #03224A solid !important;
+    border:2px #455a64 solid !important;
     cursor:pointer !important;
 }
 .oserion_highlight:hover{
-    border:2px #ff5d00 solid !important;
+    border:2px #84b0ba solid !important;
 }
 
 textarea.tinymce {

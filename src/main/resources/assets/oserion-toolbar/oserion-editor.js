@@ -50,10 +50,10 @@ var osrEditor = function(){
         };
         var submit = function(){
             var req = $.ajax({
-                type: "PUT",
-                url: "/oserion/services/content/"+editableElement.attr("id"),
-                data: JSON.stringify({id:editableElement.attr("id"), type: OSR_EDITABLE_TYPE, value: tinyMCE.activeEditor.getContent()}),
-                success: function(){},
+                type: "POST",
+                url: "/oserion/services/content/"+OSR_EDITABLE_TYPE+"/"+editableElement.attr("id"),
+                data: JSON.stringify({ref:editableElement.attr("id"), type: OSR_EDITABLE_TYPE, value: tinyMCE.activeEditor.getContent()}),
+                success: function(){document.location.reload();},
                 dataType: "application/json"
             });
             req.always(function(r) {
