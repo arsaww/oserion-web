@@ -52,9 +52,10 @@ var osrEditor = function(){
             var req = $.ajax({
                 type: "POST",
                 url: "/oserion/services/content/"+OSR_EDITABLE_TYPE+"/"+editableElement.attr("id"),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
                 data: JSON.stringify({ref:editableElement.attr("id"), type: OSR_EDITABLE_TYPE, value: tinyMCE.activeEditor.getContent()}),
-                success: function(){document.location.reload();},
-                dataType: "application/json"
+                success: function(){document.location.reload();}
             });
             req.always(function(r) {
                 if(r.status != 200){
