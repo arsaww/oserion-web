@@ -39,6 +39,7 @@ public class ContextListener implements ServletContextListener {
 
 
 		} catch (IOException e) {
+			e.printStackTrace();
 			LOGGER.log(Level.SEVERE, "Context Initialisation failure :", e);
 		}
 

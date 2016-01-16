@@ -40,6 +40,7 @@ public class TemplatesController extends OserionController {
             return new JsonResponseMessage("OK",file.getOriginalFilename() + "was successfully inserted as a template");
 
         }catch (Exception e){
+            e.printStackTrace();
             throw new InternalErrorException(e);
         }
     }
@@ -67,6 +68,7 @@ public class TemplatesController extends OserionController {
             return  getApiFacade(req).getTemplates();
 
         }catch (Exception e){
+            e.printStackTrace();
             throw new InternalErrorException(e);
         }
     }

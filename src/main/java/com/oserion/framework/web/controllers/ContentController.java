@@ -1,6 +1,6 @@
 package com.oserion.framework.web.controllers;
 
-import com.oserion.framework.web.json.beans.JsonContent;
+import com.oserion.framework.api.business.beans.ContentElement;
 import com.oserion.framework.web.json.beans.JsonResponseMessage;
 import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.exceptions.InternalErrorException;
@@ -28,12 +28,12 @@ public class ContentController extends OserionController {
     }
 
     @RequestMapping(value = "/{type}/{contentId}", method = RequestMethod.POST)
-    public Object updateContent(@PathVariable String contentId, @PathVariable String type,@RequestBody JsonContent c,
+    public Object updateContent(@PathVariable String contentId, @PathVariable String type, @RequestBody ContentElement c,
                                 HttpServletRequest req, HttpServletResponse resp)
             throws AdminLevelRequiredException, InternalErrorException {
-
         checkAdminAccess(req, resp);
         try {
+            getApiFacade(req).setContentElementValue(c);
             return new JsonResponseMessage("OK", contentId + "updated");
         } catch (Exception e) {
             throw new InternalErrorException("Fail to update the content "+ contentId);
