@@ -24,7 +24,7 @@ public class HtmlController extends OserionController {
     private static final Logger LOG = Logger.getLogger(HtmlController.class.getName());
 
     @ResponseBody
-    @RequestMapping(value = "/**html", method = RequestMethod.GET)
+    @RequestMapping(value = "/**html", method = RequestMethod.GET, produces = "text/html; charset=utf-8")
     public String getHTMLPage(HttpServletRequest req,HttpServletResponse resp) throws InternalErrorException, NotFoundException {
         AuthenticationAccess.checkAccess(req, resp);
         try {
@@ -32,9 +32,8 @@ public class HtmlController extends OserionController {
         } catch (OserionDatabaseNotFoundException e) {
             throw new NotFoundException(e);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new InternalErrorException(e);
-        }
+           e.printStackTrace();            throw new InternalErrorException(e);
+       }
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

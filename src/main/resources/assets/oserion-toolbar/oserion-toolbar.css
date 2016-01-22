@@ -1,97 +1,100 @@
 .oserion_toolbar_container {
-    margin-top: 35px;
-    position: relative;
+    margin-top: 35px !important;
+    position: relative !important;
 }
 
 #oserion_toolbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 30px;
-    padding: 3px;
-    float: right;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
-    border: 1px #DADADA solid;
-    border-bottom: 1px #bfbfbf solid;
-    border-right: 1px #bfbfbf solid;
-    background-color: #DCDCDC;
-    z-index: 1000;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    /*height: 30px !important;*/
+    padding: 3px !important;
+    float: right !important;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12) !important;
+    border: 1px #DADADA solid !important;
+    border-bottom: 1px #bfbfbf solid !important;
+    border-right: 1px #bfbfbf solid !important;
+    background-color: #DCDCDC !important;
+    z-index: 9999999999999 !important;
 }
 
 #oserion_toolbar .editButton {
-    float: left;
-    width: 26px;
-    height: 23px;
-    background-position: top left;
-    background-image: url("images/edit_button_icon.jpg");
-    cursor: pointer;
+    float: left !important;
+    width: 26px !important;
+    height: 23px !important;
+    background-position: top left !important;
+    background-image: url("images/edit_button_icon.jpg") !important;
+    cursor: pointer !important;
 }
 
 #oserion_toolbar .editButton.active {
-    background-position: bottom left;
+    background-position: bottom left !important;
 }
 
 #info_block {
-    color: #455a64;
-    width: auto;
-    font-family:'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif;
-    font-size: 11px;
-    line-height: 23px;
-    cursor: pointer;
-    margin-left: 5px;
-    float: left;
+    color: #455a64 !important;
+    width: auto !important;
+    font-family:'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif !important;
+    font-size: 11px !important;
+    line-height: 23px !important;
+    cursor: pointer !important;
+    margin-left: 5px !important;
+    float: left !important;
 }
 
 #oserion_toolbar .richTextEditor {
-    position: absolute;
-    top: 60px;
-    left: 80px;
-    width: 800px;
-    height: auto;
-    background-color: white;
-    border: 1px #e0e0e0 solid;
-    padding: 10px;
-    display:none;
+    position: absolute !important;
+    top: 60px !important;
+    left: 80px !important;
+    width: 800px !important;
+    height: auto !important;
+    background-color: white !important;
+    border: 1px #e0e0e0 solid !important;
+    padding: 10px !important;
+    display:none ;
 
 }
 
 #oserion_toolbar .richTextEditor h1 {
-    font-family:'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif;
-    font-size: 12px;
-    margin: 0;
-    padding: 0 0 10px 0;
-    text-align: center;
-    color:#455a64;
+    font-family:'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif !important;
+    font-size: 12px !important;
+    margin: 0 !important;
+    padding: 0 0 10px 0 !important;
+    text-align: center !important;
+    color:#455a64 !important;
 }
 
-#oserion_toolbar .richTextEditor .button-container .button{
-    font-family:'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif;
-    float:right;
-    border:1px #e0e0e0 solid;
-    background-color: #fafafa;
-    padding:4px 7px;
-    font-size:11px;
-    margin:7px 0 0 7px;
-    cursor:pointer;
-    color:#455a64;
-    line-height: 2;
+#oserion_toolbar .richTextEditor .oserion-button-container .button{
+    font-family:'Open Sans', 'Droid Sans', Tahoma, Arial, sans-serif !important;
+    float:right !important;
+    border:1px #e0e0e0 solid !important;
+    background-color: #fafafa !important;
+    padding:4px 7px !important;
+    font-size:11px !important;
+    margin:7px 0 0 7px !important;
+    cursor:pointer !important;
+    color:#455a64 !important;
+    line-height: 2 !important;
+    height:auto !important;
+    text-decoration: none !important;
+    font-weight: normal !important;
 }
-#oserion_toolbar .richTextEditor .button-container .button:hover{
-    border:1px #B2B2B2 solid;
+#oserion_toolbar .richTextEditor .oserion-button-container .button:hover{
+    border:1px #B2B2B2 solid !important;
 }
 
 .textarea-container {
-    position: relative;
-    float: none;
+    position: relative !important;
+    float: none !important;
 }
 
 .oserion_highlight{
-    border:2px #455a64 solid !important;
-    cursor:pointer !important;
+    border:2px #455a64 solid  !important;
+    cursor:pointer  !important;
 }
 .oserion_highlight:hover{
-    border:2px #84b0ba solid !important;
+    border:2px #84b0ba solid  !important;
 }
 
 textarea.tinymce {
