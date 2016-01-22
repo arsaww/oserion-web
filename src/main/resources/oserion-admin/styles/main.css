@@ -51,6 +51,8 @@ input[type="number"], input[type="password"], input[type="text"], select, textar
 
 /* -- content -- */
 .container.manager{margin:24px;}
+.inner-nav li{display:inline-block; float: left; padding: 0 15px 0 15px; cursor:pointer;}
+.inner-nav .current{background-color: white;}
 
 /* -- resources -- */
 .ressources-corner-link {position: absolute;top: 0; right: 10px;}
