@@ -13,6 +13,7 @@
         var loadScript = function( url, callback ) {
             var script = document.createElement( "script" );
             script.type = "text/javascript";
+            script.className = "oserion-script";
             if(script.readyState) {  //IE
                 script.onreadystatechange = function() {
                     if ( script.readyState === "loaded" || script.readyState === "complete" ) {
@@ -82,13 +83,60 @@
         };
 
         var defineButtons = function(){
-            //TODO add all new buttons here
+            var isPage = document.location.href.indexOf(".html") > -1;
+            var isTemplate = document.location.href.indexOf(".template") > -1;
+            var isJSEnabled = !(osrGetUrlParams["js"] == "false");
+
+            var accessAdminButton = {
+                info : OSR_ACCESS_ADMIN_UI_INFO,
+                enable : function(){document.location.href = "/admin";},
+                disable : function(){}
+            };
+            toolBarManager.addButton(Button(accessAdminButton,"accessAdminButton"));
+
+            var switchTemplateModeButton = {
+                info : OSR_SWITCH_TEMPLATE_MODE_INFO,
+                enable : function(){document.location.href = document.location.href.replace(".html",".template");},
+                disable : function(){}
+            };
+            if(isPage) toolBarManager.addButton(Button(switchTemplateModeButton,"switchTemplateModeButton"));
+
+            var switchPageModeButton = {
+                info : OSR_SWITCH_PAGE_MODE_INFO,
+                enable : function(){document.location.href = document.location.href.replace(".template",".html");},
+                disable : function(){}
+            };
+            if(isTemplate) toolBarManager.addButton(Button(switchPageModeButton,"switchPageModeButton"));
+
             var editButton = {
                 info : OSR_EDITABLE_INFO,
                 enable : function(){osrEditor.getType(OSR_EDITABLE_ELEMENT_SELECTOR).highlight();},
                 disable : function(){document.location.reload();}
             };
-            toolBarManager.addButton(Button(editButton));
+            if(isPage) toolBarManager.addButton(Button(editButton,"editButton"));
+
+            var javascriptEnableButton = {
+                info : OSR_JAVASCRIPT_ENABLE_INFO,
+                enable : function(){document.location.href = document.location.pathname + "?js=false"},
+                disable : function(){}
+            };
+            if(isTemplate && isJSEnabled) toolBarManager.addButton(Button(javascriptEnableButton,"javascriptEnableButton"));
+
+            var javascriptDisableButton = {
+                info : OSR_JAVASCRIPT_DISABLE_INFO,
+                enable : function(){document.location.href = document.location.pathname + "?js=true"},
+                disable : function(){}
+            };
+            if(isTemplate && !isJSEnabled) toolBarManager.addButton(Button(javascriptDisableButton,"javascriptDisableButton"));
+
+            var submitTemplateButton = {
+                info : OSR_SUBMIT_TEMPLATE_INFO,
+                enable : function(){alert("TODO JFE")},
+                disable : function(){document.location.reload();}
+            };
+            if(isTemplate) toolBarManager.addButton(Button(submitTemplateButton,"submitTemplateButton"));
+
+
         };
 
         //Public
@@ -112,7 +160,7 @@
     }();
 
     /** BUTTON **/
-    var Button = function(cb){
+    var Button = function(cb, cssClass){
 
         //Private Attribute
         var ENABLED = false;
@@ -126,7 +174,7 @@
             init : function(container){
                 var b = this;
                 var e = $("<div></div>");
-                e.addClass("editButton");
+                e.addClass(cssClass);
                 e.click(function(){b.active();});
                 e.mouseover(function(){b.showLegend();});
                 e.mouseout(function(){b.hideLegend();});
@@ -167,6 +215,27 @@ var osrGetCookie = function(name) {
     var match = document.cookie.match(new RegExp(name + '=([^;]+)'));
     if (match) return match[1];
 };
+
+var osrGetUrlParams = function() {
+    var query_string = {};
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        // If first entry with this name
+        if (typeof query_string[pair[0]] === "undefined") {
+            query_string[pair[0]] = decodeURIComponent(pair[1]);
+            // If second entry with this name
+        } else if (typeof query_string[pair[0]] === "string") {
+            var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+            query_string[pair[0]] = arr;
+            // If third or later entry with this name
+        } else {
+            query_string[pair[0]].push(decodeURIComponent(pair[1]));
+        }
+    }
+    return query_string;
+}();
 
 $(document).ready(function(){
     var access = osrGetCookie("osr-access");

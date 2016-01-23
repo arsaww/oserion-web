@@ -18,7 +18,13 @@ var OSR_TOOLBAR_ID = "oserion_toolbar";
 
 /** LABEL **/
 var OSR_EDITABLE_INFO = "Editer le contenu";
+var OSR_SUBMIT_TEMPLATE_INFO = "Mettre &agrave; jour les modifications du template";
 var OSR_EDITABLE_OVERVIEW = "Affichage de l'aper&ccedil;u pendant 5s...";
+var OSR_SWITCH_TEMPLATE_MODE_INFO = "Basculer en mode &eacute;dition de la structure (template)";
+var OSR_SWITCH_PAGE_MODE_INFO = "Basculer en mode &eacute;dition de page";
+var OSR_ACCESS_ADMIN_UI_INFO = "Acc&eacute;der &agrave; l'interface d'administration";
+var OSR_JAVASCRIPT_ENABLE_INFO = "Le JavaScript est activ&eacute; sur le template, cliquer pour le d&eacute;sactiver";
+var OSR_JAVASCRIPT_DISABLE_INFO = "Le JavaScript est d&eacute;sactiv&eacute; sur le template, cliquer pour l'activer";
 
 /** TIMER **/
 var OSR_OVERVIEW_TIMER = 5000;

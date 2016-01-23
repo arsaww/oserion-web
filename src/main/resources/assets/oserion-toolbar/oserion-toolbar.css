@@ -24,9 +24,66 @@
     width: 26px !important;
     height: 23px !important;
     background-position: top left !important;
-    background-image: url("images/edit_button_icon.jpg") !important;
+    background-image: url("images/editButton.jpg") !important;
     cursor: pointer !important;
 }
+
+#oserion_toolbar .accessAdminButton {
+    float: left !important;
+    width: 26px !important;
+    height: 23px !important;
+    background-position: top left !important;
+    background-image: url("images/accessAdminButton.jpg") !important;
+    cursor: pointer !important;
+}
+
+#oserion_toolbar .submitTemplateButton {
+    float: left !important;
+    width: 26px !important;
+    height: 23px !important;
+    background-position: top left !important;
+    background-image: url("images/submitTemplateButton.jpg") !important;
+    cursor: pointer !important;
+}
+
+#oserion_toolbar .javascriptEnableButton {
+    float: left !important;
+    width: 26px !important;
+    height: 23px !important;
+    background-position: top left !important;
+    background-image: url("images/javascriptEnableButton.jpg") !important;
+    cursor: pointer !important;
+}
+
+#oserion_toolbar .javascriptDisableButton {
+    float: left !important;
+    width: 26px !important;
+    height: 23px !important;
+    background-position: top left !important;
+    background-image: url("images/javascriptDisableButton.jpg") !important;
+    cursor: pointer !important;
+}
+
+#oserion_toolbar .switchPageModeButton {
+    float: left !important;
+    width: 26px !important;
+    height: 23px !important;
+    background-position: top left !important;
+    background-image: url("images/switchPageModeButton.jpg") !important;
+    cursor: pointer !important;
+}
+
+
+#oserion_toolbar .switchTemplateModeButton {
+    float: left !important;
+    width: 26px !important;
+    height: 23px !important;
+    background-position: top left !important;
+    background-image: url("images/switchTemplateModeButton.jpg") !important;
+    cursor: pointer !important;
+}
+
+
 
 #oserion_toolbar .editButton.active {
     background-position: bottom left !important;
