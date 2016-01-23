@@ -2,6 +2,7 @@ package com.oserion.framework.web.controllers;
 
 import com.oserion.framework.api.exceptions.OserionDatabaseException;
 import com.oserion.framework.api.exceptions.OserionDatabaseNotFoundException;
+import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.exceptions.InternalErrorException;
 import com.oserion.framework.web.exceptions.NotFoundException;
 import com.oserion.framework.web.util.AuthenticationAccess;
@@ -24,7 +25,7 @@ public class HtmlController extends OserionController {
     private static final Logger LOG = Logger.getLogger(HtmlController.class.getName());
 
     @ResponseBody
-    @RequestMapping(value = "/**html", method = RequestMethod.GET, produces = "text/html; charset=utf-8")
+    @RequestMapping(value = "/**.html", method = RequestMethod.GET, produces = "text/html; charset=utf-8")
     public String getHTMLPage(HttpServletRequest req,HttpServletResponse resp) throws InternalErrorException, NotFoundException {
         AuthenticationAccess.checkAccess(req, resp);
         try {
@@ -32,8 +33,27 @@ public class HtmlController extends OserionController {
         } catch (OserionDatabaseNotFoundException e) {
             throw new NotFoundException(e);
         } catch (Exception e) {
-           e.printStackTrace();            throw new InternalErrorException(e);
+           e.printStackTrace();
+                throw new InternalErrorException(e);
        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/**.template", method = RequestMethod.GET, produces = "text/html; charset=utf-8")
+    public String getHTMLTemplate(HttpServletRequest req,HttpServletResponse resp) throws InternalErrorException, NotFoundException, AdminLevelRequiredException {
+        checkAdminAccess(req, resp);
+        try {
+            String uri = req.getRequestURI();
+            uri = uri.substring(0, uri.length()-8)+"html";
+            boolean js = "false".equalsIgnoreCase(req.getParameter("js")) ? false : true;
+            System.out.println(uri);
+            return getApiFacade(req).getHtmlTemplate(uri, AuthenticationAccess.isAdmin(req, resp), js);
+        } catch (OserionDatabaseNotFoundException e) {
+            throw new NotFoundException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InternalErrorException(e);
+        }
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
