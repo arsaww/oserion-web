@@ -4,6 +4,8 @@ import com.oserion.framework.web.json.beans.JsonTemplatePage;
 import com.oserion.framework.web.exceptions.AdminLevelRequiredException;
 import com.oserion.framework.web.exceptions.InternalErrorException;
 import com.oserion.framework.web.json.beans.JsonResponseMessage;
+import com.oserion.framework.web.util.URLHelper;
+import com.sun.org.apache.xml.internal.utils.URI;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +40,25 @@ public class TemplatesController extends OserionController {
 
             LOG.log(Level.INFO, file.getOriginalFilename() + "was successfully inserted as a template");
             return new JsonResponseMessage("OK",file.getOriginalFilename() + "was successfully inserted as a template");
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new InternalErrorException(e);
+        }
+    }
+
+    @RequestMapping(value="/update", method = RequestMethod.POST)
+    public Object updateTemplate(@RequestBody JsonTemplatePage file,
+                              HttpServletRequest req,
+                              HttpServletResponse resp) throws AdminLevelRequiredException, InternalErrorException {
+        checkAdminAccess(req, resp);
+        try {
+            String refererURI = URLHelper.getReferrerURI(req);
+            refererURI = URLHelper.templateURIToHtml(refererURI);
+            getApiFacade(req).updateTemplate(refererURI,file.getValue());
+
+            LOG.log(Level.INFO, "The template was successfully updated");
+            return new JsonResponseMessage("OK", "The template was successfully updated");
 
         }catch (Exception e){
             e.printStackTrace();

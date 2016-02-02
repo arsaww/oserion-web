@@ -46,7 +46,7 @@
             init : function(e){
                 if(!IS_INIT){
                     IS_INIT = true;
-                    $('head').append('<link rel="stylesheet" href="/assets/oserion-toolbar/oserion-toolbar.css" type="text/css" />');
+                    $('head').append('<link rel="stylesheet" href="/assets/oserion-toolbar/oserion-toolbar.css" class="oserion-style" type="text/css" />');
                     loadScript("/assets/oserion-toolbar/oserion-editor.js", function() {addToolBarWhenReady(e);});
                     loadScript("/assets/oserion-toolbar/oserion-constants.js", function() {addToolBarWhenReady(e);});
                     loadScript("/assets/tinymce/tinymce.min.js", function() {addToolBarWhenReady(e);});
@@ -131,7 +131,24 @@
 
             var submitTemplateButton = {
                 info : OSR_SUBMIT_TEMPLATE_INFO,
-                enable : function(){alert("TODO JFE")},
+                enable : function(){
+                    var req = $.ajax({
+                        type: "POST",
+                        url: "/oserion/templates/update",
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        data: JSON.stringify({value:$("html").html()}),
+                        success: function(){document.location.reload();}
+                    });
+                    req.always(function(r) {
+                        if(r.status != 200){
+                            var m = jQuery.parseJSON(r.responseText);
+                            alert(m.status + " : " + m.message );
+                        }else{
+                            document.location.reload();
+                        }
+                    });
+                },
                 disable : function(){document.location.reload();}
             };
             if(isTemplate) toolBarManager.addButton(Button(submitTemplateButton,"submitTemplateButton"));

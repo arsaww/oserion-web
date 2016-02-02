@@ -46,7 +46,6 @@ public class HtmlController extends OserionController {
             String uri = req.getRequestURI();
             uri = uri.substring(0, uri.length()-8)+"html";
             boolean js = "false".equalsIgnoreCase(req.getParameter("js")) ? false : true;
-            System.out.println(uri);
             return getApiFacade(req).getHtmlTemplate(uri, AuthenticationAccess.isAdmin(req, resp), js);
         } catch (OserionDatabaseNotFoundException e) {
             throw new NotFoundException(e);
